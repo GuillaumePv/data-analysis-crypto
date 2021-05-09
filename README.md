@@ -91,6 +91,13 @@ https://github.com/hbast/pyTree
 * https://facebook.github.io/prophet/docs/diagnostics.html#cross-validation
 
 - [] see if there are all of librairies
+* faire linear regression
+* faire gaussian process
+* faire lasso / ridge regression
+
+* data macro => S&P, VIX, GVZ (gold index CBOE) => Yahoo finance
+* google trends => librairies (pytrends)
+* twitter data => OK
 
 # INFOS
 - https://www.reddit.com/r/BinanceExchange/comments/96iymr/api_nomenclature_taker_buy_base_asset_volume_vs/
