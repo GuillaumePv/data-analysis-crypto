@@ -16,23 +16,22 @@ class Data:
         self.df = None
         self.crypto_name = crypto_name
 
-    def load_crypto(self,LAG=10,reg="Price"):
+    def load_data(self):
         try:
             self.df = pd.read_csv(f'./data/processed/{self.crypto_name}_finaldb.csv').dropna()
         except FileNotFoundError:
             self.df = pd.read_csv(f'../data/processed/{self.crypto_name}_finaldb.csv').dropna()
         self.df = self.df.iloc[:,1:]
-
-        #X = df[['Close']].values
-        #X=(X[1:,:]-X[:-1,:])/X[:-1,:]
         self.df['Close_std'] = (self.df['Close']-self.df['Close'].mean())/self.df['Close'].std()
+        self.df['Close_ret'] = np.log(self.df[['Close']].values/self.df[['Close']].shift(1).values)
+    
+    def create_RNN_data(self,LAG=10,reg="Price"):
         
         if reg == "Price":
             y=self.df[['Close_std']].values
         else:
-            y=np.log(self.df[['Close']].values/self.df[['Close']].shift(1).values)
-            y = y[1:]
-
+            y= df['Close_ret'].iloc[1:,:].values
+        
         X = []
         for i in range(LAG+1,0-1,-1):
             if i > 0:
