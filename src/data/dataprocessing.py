@@ -8,11 +8,12 @@ import json
 import numpy as np
 import pandas as pd
 
-data_path = "../data/raw/"
-clean_data_path = "../data/processed/"
-eth_file = data_path+"data_ETH.csv"
-btc_file = data_path+"data_BTC.csv"
-eos_file = data_path+'data_EOS.csv'
+'''
+data_path = "../../data/raw/"
+clean_data_path = "../../data/processed/"
+eth_file = data_path+"ETH_raw.csv"
+btc_file = data_path+"BTC_raw.csv"
+eos_file = data_path+'EOS_raw.csv'
 
 file_list = [eth_file,btc_file,eos_file]
 list_ticker = ['ETH','BTC','EOS']
@@ -32,15 +33,28 @@ def processPricedata(file,ticker):
 list_df = []
 for i in range(len(file_list)):
     list_df.append(processPricedata(file_list[i],list_ticker[i]))
+'''
 
 ##############################
 ## Merge DB price & Twitter ##
 ##############################
 
+
+list_ticker = ['ETH','BTC','EOS']
+
+list_df = []
+for i in range(len(list_ticker)):
+    df = pd.read_csv(f"../../data/processed/{list_ticker[i]}_Price_clean.csv")
+    df['date'] = pd.to_datetime(df['date'])
+    list_df.append(df)
+
+
+clean_data_path = "../../data/processed/"
+
 ## Path
-tweetETH = "../data/processed/ETH_clean.csv"
-tweetBTC = "../data/processed/BTC_clean.csv"
-tweetEOS = "../data/processed/EOS_clean.csv"
+tweetETH = "../../data/processed/ETH_clean.csv"
+tweetBTC = "../../data/processed/BTC_clean.csv"
+tweetEOS = "../../data/processed/EOS_clean.csv"
 
 list_tweet = [tweetETH,tweetBTC,tweetEOS]
 list_tweet_df = []
