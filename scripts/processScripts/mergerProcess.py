@@ -48,6 +48,8 @@ def mergeBinance():
         df = pd.read_csv(f"../data/raw/{list_ticker[i]}_data_binance.csv")
         df['date'] = pd.to_datetime(df['Date'], unit='s')
         df = df.drop('Date', axis=1)
+        del df['Ignore']
+        del df['CloseTime']
         list_df.append(df)
 
 

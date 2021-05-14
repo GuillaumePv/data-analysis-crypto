@@ -18,7 +18,6 @@ def obtain_cryptodata(Cryptoname):
     client = Client(api_key, api_secret)
     print(f"FETCHING BINANCE DATA FOR {Cryptoname}...")
     start_date = "1 Dec, 2012"
-    end_date = "19 Apr, 2021"
     csvfile = open(f'../data/raw/{Cryptoname}_data_binance.csv', 'w',newline='')
     candlestick_writer= csv.writer(csvfile, delimiter=',')
 

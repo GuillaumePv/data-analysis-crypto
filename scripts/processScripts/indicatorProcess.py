@@ -133,4 +133,4 @@ def addIndicators():
         df=MACD(df,3,14)
         df=mass_index(df)
         df = df.dropna()
-        df.to_csv(f"../data/processed/{crypto}_finaldb.csv")
+        df.to_csv(f"../data/processed/{crypto}_finaldb.csv", index=False)
