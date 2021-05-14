@@ -30,7 +30,7 @@ class Data:
         if reg == "Price":
             y=self.df[['Close_std']].values
         else:
-            y= df['Close_ret'].iloc[1:,:].values
+            y= self.df[['Close_ret']].iloc[1:,:].values
         
         X = []
         for i in range(LAG+1,0-1,-1):
