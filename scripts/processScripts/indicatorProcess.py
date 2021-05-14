@@ -2,10 +2,10 @@ import numpy
 import pandas as pd
 import math as m
 
-#Moving Average  
-def MA(df, n):  
-    MA = pd.Series(df['Close'].rolling(n).mean(), name = 'MA_' + str(n))  
-    df = df.join(MA)  
+#Moving Average
+def MA(df, n):
+    MA = pd.Series(df['Close'].rolling(n).mean(), name = 'MA_' + str(n))
+    df = df.join(MA)
     return df
 
 
@@ -13,10 +13,10 @@ def MA(df, n):
 
 def MACD(df, n_fast, n_slow):
     """Calculate MACD, MACD Signal and MACD difference
-    
+
     :param df: pandas.DataFrame
-    :param n_fast: 
-    :param n_slow: 
+    :param n_fast:
+    :param n_slow:
     :return: pandas.DataFrame
     """
     EMAfast = pd.Series(df['Close'].ewm(span=n_fast, min_periods=n_slow).mean())
@@ -32,10 +32,10 @@ def MACD(df, n_fast, n_slow):
 #Average Directional Movement Index
 def ADX(df, n, n_ADX):
     """Calculate the Average Directional Movement Index for given data.
-    
+
     :param df: pandas.DataFrame
-    :param n: 
-    :param n_ADX: 
+    :param n:
+    :param n_ADX:
     :return: pandas.DataFrame
     """
     i = 0
@@ -72,12 +72,12 @@ def ADX(df, n, n_ADX):
     df = df.join(ADX)
     return df
 
-#RSI 
+#RSI
 def RSI(df, n):
     """Calculate Relative Strength Index(RSI) for given data.
-    
+
     :param df: pandas.DataFrame
-    :param n: 
+    :param n:
     :return: pandas.DataFrame
     """
     i = 0
@@ -107,7 +107,7 @@ def RSI(df, n):
 #Mass Index
 def mass_index(df):
     """Calculate the Mass Index for given data.
-    
+
     :param df: pandas.DataFrame
     :return: pandas.DataFrame
     """
@@ -119,25 +119,18 @@ def mass_index(df):
     df = df.join(MassI)
     return df
 
-def get_technical_indicators(dataset):
-    # Create 7 and 21 days Moving Average
-    dataset['ma7'] = dataset['Close'].rolling(window=7).mean()
-    dataset['ma21'] = dataset['Close'].rolling(window=21).mean()
-    
-    # Create MACD
-    dataset['26ema'] = pd.DataFrame.ewm(dataset['Close'], span=26).mean()
-    dataset['12ema'] = pd.DataFrame.ewm(dataset['Close'], span=12).mean()
-    dataset['MACD'] = (dataset['12ema']-dataset['26ema'])
+def addIndicators():
 
-    # Create Bollinger Bands
-    dataset['20sd'] = dataset['Close'].rolling(20).std()
-    dataset['upper_band'] = dataset['ma21'] + (dataset['20sd']*2)
-    dataset['lower_band'] = dataset['ma21'] - (dataset['20sd']*2)
-    
-    # Create Exponential moving average
-    dataset['ema'] = dataset['Close'].ewm(com=0.5).mean()
-    
-    # Create Momentum
-    dataset['momentum'] = dataset['Close']-1
-    
-    return dataset
+    cryptos = ['BTC', 'ETH', 'EOS']
+    for crypto in cryptos:
+        print(f"ADDING INDICATORS TO {crypto}...")
+        df = pd.read_csv(f"../data/processed/{crypto}_finaldb.csv")
+        df=MA(df, 7)
+        df=MA(df, 30)
+        df=MA(df, 100)
+        df=ADX(df,2,4)
+        df=RSI(df,14)
+        df=MACD(df,3,14)
+        df=mass_index(df)
+        df = df.dropna()
+        df.to_csv(f"../data/processed/{crypto}_finaldb.csv", index=False)

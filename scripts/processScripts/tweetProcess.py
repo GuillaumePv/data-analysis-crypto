@@ -4,8 +4,9 @@ import json
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 def processTweet(name):
+    print(f"PROCESSING {name} TWEETS...")
     #Twitter data
-    dft = pd.read_json(f"../data/raw/{name}_raw.json", lines = True,  orient='records')
+    dft = pd.read_json(f"../data/raw/{name}_data_tweet.json", lines = True,  orient='records')
 
     #date formatting
     dft['date'] = pd.to_datetime(dft['created_at'])
@@ -39,7 +40,7 @@ def processTweet(name):
     uDate = pd.Series(uDate)
 
     for i in uDate:
-        print(f"PROCESSING {name} AT DATE: ", i)
+        #print(f"PROCESSING {name} AT DATE: ", i)
         dfPartial = dft.where(dft["date"] == i).dropna()
 
         #create number of tweets
@@ -62,9 +63,9 @@ def processTweet(name):
             else:
                 dfF.loc[i, j] = 0
 
-    dfF.to_csv(f"../data/processed/{name}_clean.csv")
-    print(40*"=")
-    print(f"FINISHED PROCESSING: {name}")
+    dfF.to_csv(f"../data/processed/{name}_tweet_clean.csv")
+    print(f"FINISHED PROCESSING {name} TWEETS")
 
-for i in ['BTC', 'ETH', 'EOS']:
-    processTweet(i)
+def cleanTweets():
+    for i in ['BTC', 'ETH', 'EOS']:
+        processTweet(i)

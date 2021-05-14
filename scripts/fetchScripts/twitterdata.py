@@ -1,24 +1,6 @@
 import twint
-import datetime as dt
-import os
-import shutil
 
-
-if __name__ == '__main__':
-
-    #creates data directory if it does not exists
-    if not os.path.isdir('../data'):
-        os.mkdir('../data')
-        os.mkdir('../data/raw')
-
-    if not os.path.isdir('../data/processed'):
-        os.mkdir('../data/processed')
-
-
-    #removes raw and recreate folder
-    shutil.rmtree('../data/raw')
-    os.mkdir('../data/raw')
-
+def getTweets():
 
     #select keywords for each crypto we will train our model on
     names = []
@@ -32,6 +14,7 @@ if __name__ == '__main__':
 
     #look for tweets for each crypto
     for i in names:
+        print(f"FETCHING TWITTER DATA FOR {i[0]}...")
         name = i
         c = twint.Config()
 
@@ -40,10 +23,9 @@ if __name__ == '__main__':
         c.Verified = True
         c.Lang = "en"
         c.Min_replies = 1 # min replies
-        c.Output = f"../data/raw/{name[0]}_raw.json"
+        c.Output = f"../data/raw/{name[0]}_data_tweet.json"
         c.Since = "2017-08-17"
-        c.Until = "2021-04-26"
         c.Store_json = True
-        c.Hide_output = False
+        c.Hide_output = True
 
         tweets = twint.run.Search(c)
