@@ -63,7 +63,7 @@ def processTweet(name):
             else:
                 dfF.loc[i, j] = 0
 
-    dfF.to_csv(f"../data/processed/{name}_tweet_clean.csv")
+    dfF.to_csv(f"../data/processed/{name}_tweet_clean.csv",index=False)
     print(f"FINISHED PROCESSING {name} TWEETS")
 
 def cleanTweets():
