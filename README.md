@@ -66,12 +66,6 @@ put datasets in the "raw" folder
 │
 └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
 ```
-
-## Struturing project
-* https://drivendata.github.io/cookiecutter-data-science/
-* https://towardsdatascience.com/structuring-machine-learning-projects-be473775a1b6
-* https://towardsdatascience.com/manage-your-data-science-project-structure-in-early-stage-95f91d4d0600
-
 # TO-DO
 - [x] obtenir twitter data
 - [x] data macro => S&P, VIX, GVZ (gold index CBOE) => Yahoo finance
@@ -88,5 +82,5 @@ https://github.com/hbast/pyTree
 # INFOS
 - https://www.reddit.com/r/BinanceExchange/comments/96iymr/api_nomenclature_taker_buy_base_asset_volume_vs/
 
-## Ideas
+## New Ideas
 - take signal -> derivate of fourier equal to 0
