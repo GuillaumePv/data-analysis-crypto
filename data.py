@@ -34,7 +34,7 @@ class Data:
         
         #print(y)
         X = []
-        xx = self.df[["Volume","MA_100","coinmarketcap","justinsuntron"]]
+        xx = self.df[["Volume","MA_100","coinmarketcap","justinsuntron","tweet_count"]]
         for i in range(LAG+1,0-1,-1):
             if i > 0:
                 X.append(xx[LAG+1 - i:-i])
@@ -43,14 +43,16 @@ class Data:
 
         X = np.concatenate(X, 1)
         y = y[-X.shape[0]:,:]
-        # X = X[:,:]
-        #print(X.shape)
-        #print(y.shape)
+        
         X = X.reshape((X.shape[0], X.shape[1], 1)) # add the input dimension !
-        #print(X.shape)
-        #print(X)
+       
         y = y[:-1,:]
-        #print(y)
+        #==================
+        ## Classification ##
+        #==================
+        #y = np.concatenate((np.where(y>0,1),np.where(y<=0,1)),axis=1)
+
+        #standardize X
         X = X[:-1,:]
         ind = np.arange(0, y.shape[0], 1)
         tr = int(np.ceil(len(ind) * 0.8))
