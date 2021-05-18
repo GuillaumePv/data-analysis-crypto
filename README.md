@@ -73,31 +73,17 @@ put datasets in the "raw" folder
 * https://towardsdatascience.com/manage-your-data-science-project-structure-in-early-stage-95f91d4d0600
 
 # TO-DO
-
-* merge data
-
-* scrap all data form twitter -> use threading
-
-* add access to google drive :) https://medium.com/@chingjunetao/simple-way-to-access-to-google-service-api-a22f4251bb52
+- [x] obtenir twitter data
+- [x] data macro => S&P, VIX, GVZ (gold index CBOE) => Yahoo finance
+- [ ] faire statistiques descriptives
+- [ ] voir si besoind de réduire la dimension des données
+– [ ] faire classification des models
+- [ ] faire makefile qui run toutes les parties
 
 * create a structure tree for the report
 https://github.com/hbast/pyTree
 
 * paramétrer les output du notebooks pour éviter que ça prenne trop de storage pour github
-
-* enlever les tweets qui sont dupliquer
-
-* tester Prophet AI (Facebook) => améliorer notre model 
-* https://facebook.github.io/prophet/docs/diagnostics.html#cross-validation
-
-- [] see if there are all of librairies
-* faire linear regression
-* faire gaussian process
-* faire lasso / ridge regression
-
-* data macro => S&P, VIX, GVZ (gold index CBOE) => Yahoo finance
-* google trends => librairies (pytrends)
-* twitter data => OK
 
 # INFOS
 - https://www.reddit.com/r/BinanceExchange/comments/96iymr/api_nomenclature_taker_buy_base_asset_volume_vs/

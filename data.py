@@ -50,7 +50,7 @@ class Data:
         #==================
         ## Classification ##
         #==================
-        #y = np.concatenate((np.where(y>0,1),np.where(y<=0,1)),axis=1)
+        y = np.concatenate((np.where(y>0.05,1),np.where(y<=0.05,1)),axis=1)
 
         #standardize X
         X = X[:-1,:]
