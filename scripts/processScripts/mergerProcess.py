@@ -66,7 +66,7 @@ def mergeBinance():
     for tweet in list_tweet:
         df = pd.read_csv(tweet)
         df['date'] = pd.to_datetime(df['date'])
-        list_tweet_df.append(df.iloc[:,1:].sort_values('date'))
+        list_tweet_df.append(df.sort_values('date'))
 
     for i in range(len(list_df)):
         df_outer = list_df[i].merge(list_tweet_df[i], on=['date'], how='left')

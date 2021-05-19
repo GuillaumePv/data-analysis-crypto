@@ -17,6 +17,7 @@ def getData():
         if i not in vix_daily['date'].values:
             vix_daily = vix_daily.append(pd.Series(data={'date': i, 'vix_close':np.nan}), ignore_index=True)
     vix_daily = vix_daily.loc[:, ('date', 'close')]
+    vix_daily.rename(columns = {'close':'vix'}, inplace = True)
 
 
     print("GETTING SOME GOLD...")
@@ -28,6 +29,7 @@ def getData():
         if i not in gvz_daily['date'].values:
             gvz_daily = gvz_daily.append(pd.Series(data={'date': i, 'gvz_close':np.nan}), ignore_index=True)
     gvz_daily = gvz_daily.loc[:, ('date', 'close')]
+    gvz_daily.rename(columns = {'close':'gvz'}, inplace = True)
 
     yahoo_df = vix_daily.merge(gvz_daily, right_on='date', left_on='date')
     yahoo_df['date'] = pd.to_datetime(yahoo_df['date'])

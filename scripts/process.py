@@ -4,7 +4,7 @@ import processScripts.indicatorProcess as indicators
 import processScripts.yahooProcess as yahoo
 
 def processData():
-    #tweetProcess.cleanTweets()
+    tweetProcess.cleanTweets()
     merger.mergeBinance()
     indicators.addIndicators()
     yahoo.getData()
