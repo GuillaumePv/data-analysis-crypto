@@ -71,8 +71,8 @@ put datasets in the "raw" folder
 - [x] data macro => S&P, VIX, GVZ (gold index CBOE) => Yahoo finance
 - [ ] faire statistiques descriptives
 - [ ] voir si besoind de réduire la dimension des données
-– [ ] faire classification des models
 - [ ] faire makefile qui run toutes les parties
+- [ ] faire classification des models
 
 * create a structure tree for the report
 https://github.com/hbast/pyTree
