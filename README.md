@@ -74,10 +74,10 @@ put datasets in the "raw" folder
 - [ ] faire makefile qui run toutes les parties
 - [ ] faire classification des models
 
-* create a structure tree for the report
+- [x] create a structure tree for the report
 https://github.com/hbast/pyTree
 
-* paramétrer les output du notebooks pour éviter que ça prenne trop de storage pour github
+- [ ] paramétrer les output du notebooks pour éviter que ça prenne trop de storage pour github
 
 # INFOS
 - https://www.reddit.com/r/BinanceExchange/comments/96iymr/api_nomenclature_taker_buy_base_asset_volume_vs/
