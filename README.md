@@ -78,9 +78,11 @@ put datasets in the "raw" folder
 https://github.com/hbast/pyTree
 
 - [ ] paramétrer les output du notebooks pour éviter que ça prenne trop de storage pour github
+- [ ] test hyperparameter: https://blog.tensorflow.org/2020/01/hyperparameter-tuning-with-keras-tuner.html
 
 # INFOS
 - https://www.reddit.com/r/BinanceExchange/comments/96iymr/api_nomenclature_taker_buy_base_asset_volume_vs/
 
 ## New Ideas
 - take signal -> derivate of fourier equal to 0
+- https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f
