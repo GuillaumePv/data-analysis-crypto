@@ -12,7 +12,7 @@ def fetchData():
         os.mkdir('../data/raw')
 
 
-    #cryptoRaw.getRawCrypto()
+    cryptoRaw.getRawCrypto()
     twitterRaw.getTweets()
 
 
