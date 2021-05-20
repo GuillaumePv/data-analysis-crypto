@@ -179,7 +179,7 @@ class RNN(DNN):
 
             if batch_normalization:
                 # add batch normalization if specified
-                L.append(tf.keras.layers.BatchNormalization())
+                L.append(tf.keras.layers.BatchNormalization(momentum=0.8))
 
 
         # add the final layer
