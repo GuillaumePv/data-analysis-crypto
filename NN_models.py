@@ -4,7 +4,8 @@ import pandas as pd
 import os
 from matplotlib import  pyplot as plt
 from data import Data
-from sklearn.metrics import auc, confusion_matrix
+from sklearn.metrics import auc, confusion_matrix, accuracy_score
+
 
 class DNN:
     def __init__(self):
@@ -129,7 +130,10 @@ class DNN:
             col = ['Predicted ' + str(x) for x in cf.columns]
             cf.index = index
             cf.columns = col
+            # correct beug
+            accuracy = accuracy_score(y_true=np.argmax(data.y_te, 1), y_pred=np.argmax(pred, 1))
             print(cf)
+            print(f'Accuracy score: {accuracy}')
 
     def train_model(self, data, epoch=10, bs=256, verbose=0, tensor_board_name=None):
         assert type(data) == Data, 'the data object must come from the "Data" class'
@@ -138,6 +142,7 @@ class DNN:
         print('### start training for', epoch, 'epochs')
         # Prepare the validation dataset
         val_dataset = tf.data.Dataset.from_tensor_slices((data.X_va, data.y_va))
+        #batch size for our validation data
         val_dataset = val_dataset.batch(256)
 
         if tensor_board_name is not None:

@@ -26,7 +26,7 @@ class Data:
         self.df['Close_ret_t+1'] = np.log(self.df[['Close']].shift(-1).values/self.df[['Close']].values)
         self.df['pump_5'] = np.where(self.df['Close_ret_t+1'] > 0.05,1,0)
 
-    def create_RNN_data(self,LAG=10,reg="Price",columns=["Volume","Close"]):
+    def create_RNN_data(self,LAG=10,reg="Price",columns=["Volume","tweet_count","vix"]):
         
         if reg == "Price":
             y=self.df[['Close_std']].values
@@ -57,7 +57,7 @@ class Data:
         #standardize X
         X = X[:-1,:]
         ind = np.arange(0, y.shape[0], 1)
-        tr = int(np.ceil(len(ind) * 0.8))
+        tr = int(np.ceil(len(ind) * 0.7))
         te = int(np.ceil(len(ind) * 0.9))
         
         self.X_tr = X[np.where(ind[:tr])[0], :]
