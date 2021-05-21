@@ -73,7 +73,7 @@ put datasets in the "raw" folder
 - [ ] voir si besoind de réduire la dimension des données
 - [ ] faire makefile qui run toutes les parties
 - [x] faire classification des models
-
+- [ ] corriger nom des fichiers excels
 - [x] create a structure tree for the report
 https://github.com/hbast/pyTree
 
