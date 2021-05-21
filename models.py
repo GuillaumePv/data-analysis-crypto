@@ -102,7 +102,7 @@ X_scaled = scaler.fit_transform(X)
 
 
 y = data.df['pump_5'].values
-print(f'number return > 0.05: {np.sum(y==1)}')
+print(f'number return > 0.00: {np.sum(y==1)}')
 print(f'shape of y: {y.shape}')
 
 # plt.scatter(X.index,y)
