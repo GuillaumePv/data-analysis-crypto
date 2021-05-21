@@ -42,8 +42,10 @@ np.random.seed(1234)
 tf.random.set_seed(1234)
 
 #Initialization Data
-data = Data("BTC")
-data.load_data()
+data = Data("EOS")
+thresold_pump = 0.01
+model_type = 'Return'
+data.load_data(pump_thresold=thresold_pump)
 
 #print(data.df.corr())
 #================
@@ -52,8 +54,7 @@ data.load_data()
 
 features = data.df.iloc[:,3:-2].columns # select features for our model
 features = features.drop('date')
-thresold_pump = 0.05
-model_type = 'Return'
+
 
 #==============
 # Creating Data
@@ -102,7 +103,7 @@ X_scaled = scaler.fit_transform(X)
 
 
 y = data.df['pump_5'].values
-print(f'number return > 0.00: {np.sum(y==1)}')
+print(f'number return > {thresold_pump}: {np.sum(y==1)}')
 print(f'shape of y: {y.shape}')
 
 # plt.scatter(X.index,y)
@@ -122,7 +123,7 @@ X_train, X_test, y_train, y_test = X_scaled[:split],X_scaled[split:], y[:split],
 
 print("\n","=== Random Forest ===")
 # https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
-randomForest = RandomForestClassifier(criterion='gini',n_estimators = 1000, random_state = 42).fit(X_train,y_train)
+randomForest = RandomForestClassifier(criterion='entropy',n_estimators = 1000, random_state = 42).fit(X_train,y_train)
 
 pscore_train = accuracy_score(y_test, randomForest.predict(X_test))
 print(f'Accruracy score: {pscore_train}')

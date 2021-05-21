@@ -16,7 +16,7 @@ class Data:
         self.df = None
         self.crypto_name = crypto_name
 
-    def load_data(self):
+    def load_data(self,pump_thresold):
         try:
             self.df = pd.read_csv(f'./data/processed/{self.crypto_name}_finaldb.csv').dropna()
         except FileNotFoundError:
@@ -25,7 +25,7 @@ class Data:
         self.df['abs_diff_close_open'] = np.abs(self.df['Close'] - self.df['Open'])
         self.df['Close_std'] = (self.df['Close']-self.df['Close'].mean())/self.df['Close'].std()
         self.df['Close_ret_t+1'] = np.log(self.df[['Close']].shift(-1).values/self.df[['Close']].values)
-        self.df['pump_5'] = np.where(self.df['Close_ret_t+1'] > 0.02,1,0)
+        self.df['pump_5'] = np.where(self.df['Close_ret_t+1'] > pump_thresold,1,0)
 
     def create_RNN_data(self,LAG=10,reg="Price",columns=["Volume","tweet_count","vix"],pump_thresold=0.05):
         
