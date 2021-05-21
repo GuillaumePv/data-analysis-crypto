@@ -21,13 +21,19 @@ class Data:
             self.df = pd.read_csv(f'./data/processed/{self.crypto_name}_finaldb.csv').dropna()
         except FileNotFoundError:
             self.df = pd.read_csv(f'../data/processed/{self.crypto_name}_finaldb.csv').dropna()
-        self.df = self.df.iloc[:,1:]
+        #self.df = self.df.iloc[:,1:]
+        self.df['abs_diff_close_open'] = np.abs(self.df['Close'] - self.df['Open'])
         self.df['Close_std'] = (self.df['Close']-self.df['Close'].mean())/self.df['Close'].std()
         self.df['Close_ret_t+1'] = np.log(self.df[['Close']].shift(-1).values/self.df[['Close']].values)
         self.df['pump_5'] = np.where(self.df['Close_ret_t+1'] > 0.05,1,0)
 
-    def create_RNN_data(self,LAG=10,reg="Price",columns=["Volume","tweet_count","vix"]):
+    def create_RNN_data(self,LAG=10,reg="Price",columns=["Volume","tweet_count","vix"],pump_thresold=0.05):
         
+        # condtion to choose a thresold
+        assert pump_thresold <= 0.10, "choose a thresold less than 10%"
+
+        assert reg in ['Price','Return'], "No model is available for reg"
+
         if reg == "Price":
             y=self.df[['Close_std']].values
         else:
@@ -52,7 +58,7 @@ class Data:
         #======================
         # LSTM classification #
         #======================
-        y = np.concatenate((np.where(y>0.05,1,0),np.where(y<=0.05,1,0)),axis=1)
+        y = np.concatenate((np.where(y>pump_thresold,1,0),np.where(y<=pump_thresold,1,0)),axis=1)
 
         #standardize X
         X = X[:-1,:]

@@ -15,7 +15,8 @@ class DNN:
     def create_model(
             self,
             data,
-            learning_rate=0.005,
+            learning_rate = 5e-04, #best to do classification => vanishing gradient
+            #learning_rate=0.005,
             opti='adam',  # you can put 'adam', 'sgd', or 'rms_prop'
             batch_normalization=False,
             activation='relu',  # 'sigmoid', or 'relu' are the main two, but others are coded in keras (see documentation)

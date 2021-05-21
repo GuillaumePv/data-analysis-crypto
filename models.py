@@ -10,8 +10,11 @@ import seaborn as sns
 #======================
 import numpy as np
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
 
 import sys
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 from data import Data
 
 #=========
@@ -25,30 +28,60 @@ from NN_models import RNN
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier, plot_tree
 #====================
 # Performance measure
 #====================
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.model_selection import train_test_split
-
+import tensorflow as tf
 #=====================================================================
+# Define seed
+
+np.random.seed(1234)
+tf.random.set_seed(1234)
+
 #Initialization Data
 data = Data("BTC")
 data.load_data()
+
+#================
+# Data Parameters
+#================
+
+features = data.df.iloc[:,3:-2].columns # select features for our model
+features = features.drop('date')
+thresold_pump = 0.05
+model_type = 'Return'
+
+#==============
+# Creating Data
+#==============
 #choose for our estimation
-data.create_RNN_data(reg='return',LAG=1)
+data.create_RNN_data(reg=model_type,LAG=5,columns=features,pump_thresold=thresold_pump)
 print(f'dimension of data: {data.df.shape}')
+print(data.df['date'].head(5))
+
+
 
 #%%
 #=======================#
 # Neural Network models #
 #=======================#
 
+
+# Parameters
+#===========
+architecture = [10]
+activation_fct = "relu"
+drop_out = 0.2
+optimizer = "adam"
+
 model=RNN()
 
 # add callback for early stopping
-model.create_model(data,architecture=[10,10,10],batch_normalization=True,activation="relu",drop_out=0.2)
-model.train_model(data,verbose=0,epoch=100)
+model.create_model(data,architecture=architecture,batch_normalization=True,activation=activation_fct,drop_out=drop_out,opti=optimizer)
+model.train_model(data,verbose=0,epoch=20)
 model.show_performance(label_='Error graph',data=data)
 pred=model.model(data.X_te)
 
@@ -60,16 +93,32 @@ pred=model.model(data.X_te)
 #===============#
 # Simple models #
 #===============#
+
 print("\n","==== Simple model ====")
 # standardize and choose our data
-X = data.df[["Volume","vix","gvz","Close_std","RSI_10","tweet_count",'Mass Index']]
+X = data.df[features]
+
+# Standardize date
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+
 y = np.where(data.df['pump_5'].values > 0.05,0,1)
 feature_names = [column for column in X.columns]
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+pct_split = 0.4
+split = int(pct_split*len(X))
+X_train, X_test, y_train, y_test = X_scaled[:split],X_scaled[split:], y[:split], y[split:]
+
+#plot to see train test data
+# X_tr, X_te = X.iloc[:split,:], X.iloc[split:,:]
+# plt.plot(X_tr.index,X_tr['Close'])
+# plt.plot(X_te.index,X_te['Close'])
+# plt.show()
 
 print("\n","=== Random Forest ===")
-randomForest = RandomForestClassifier().fit(X_train,y_train)
+# https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+randomForest = RandomForestClassifier(criterion='entropy').fit(X_train,y_train)
 
 pscore_train = accuracy_score(y_test, randomForest.predict(X_test))
 print(f'Accruracy score: {pscore_train}')
@@ -79,10 +128,24 @@ print("\n","Confusion Matrix")
 print(clf)
 
 print("\n","=== Logistic regresion ===")
-clf = LogisticRegression(random_state=0).fit(X_train, y_train)
+# https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
+clf = LogisticRegression().fit(X_train, y_train)
 
 pscore_train = accuracy_score(y_test, clf.predict(X_test))
 print(f'Accruracy score: {pscore_train}')
 print("\n","Confusion Matrix")
 print(confusion_matrix(y_test, clf.predict(X_test)))
 
+
+print("\n","=== Decision Tree ===")
+# https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
+clf = DecisionTreeClassifier().fit(X_train, y_train)
+
+pscore_train = accuracy_score(y_test, clf.predict(X_test))
+print(f'Accruracy score: {pscore_train}')
+print("\n","Confusion Matrix")
+print(confusion_matrix(y_test, clf.predict(X_test)))
+
+# plot decision Tree
+#plot_tree(clf)
+# %%

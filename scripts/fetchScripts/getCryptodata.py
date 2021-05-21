@@ -11,9 +11,11 @@
 from config import api_key, api_secret
 from binance.client import Client
 import csv
+from pandas_datareader import data
+import pandas as pd
+import datetime as dt
 
-
-
+## Binance API
 def obtain_cryptodata(Cryptoname):
     client = Client(api_key, api_secret)
     print(f"FETCHING BINANCE DATA FOR {Cryptoname}...")
@@ -34,12 +36,24 @@ def obtain_cryptodata(Cryptoname):
     csvfile.close()
 
 
+def obtainCrypto_yahoofinance(Cryptoname):
+    start_date = '2012-03-22' #@param {type:"date"}
+    #@title Date fields
+    end_date = str(dt.datetime.now().date())
+    #end_date = '2020-12-31'
+    df = data.DataReader(f"{Cryptoname}-USD", 
+                       start=start_date, 
+                       end=end_date, 
+                       data_source='yahoo')
+    df['Date'] = df.index
+    df.to_csv(f'../data/raw/{Cryptoname}_data_binance.csv')
+
 def getRawCrypto():
 
     ticker_list=['BTC', 'ETH', 'EOS']
 
     for ticker in ticker_list:
-        obtain_cryptodata(ticker)
+        obtainCrypto_yahoofinance(ticker)
 
 
 '''
