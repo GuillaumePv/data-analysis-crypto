@@ -45,7 +45,7 @@ def obtainCrypto_yahoofinance(Cryptoname):
                        start=start_date, 
                        end=end_date, 
                        data_source='yahoo')
-    df['Date'] = df.index
+    df['date'] = df.index
     df.to_csv(f'../data/raw/{Cryptoname}_data_binance.csv')
 
 def getRawCrypto():

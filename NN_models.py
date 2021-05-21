@@ -15,7 +15,7 @@ class DNN:
     def create_model(
             self,
             data,
-            learning_rate = 5e-04, #best to do classification => vanishing gradient
+            learning_rate = 5e-05, #best to do classification => vanishing gradient
             #learning_rate=0.005,
             opti='adam',  # you can put 'adam', 'sgd', or 'rms_prop'
             batch_normalization=False,

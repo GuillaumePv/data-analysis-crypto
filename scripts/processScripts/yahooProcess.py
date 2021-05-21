@@ -3,13 +3,12 @@ from datetime import date
 import pandas as pd
 import numpy as np
 
-
 def getData():
     dates = pd.date_range("17/08/2017", end=date.today(), freq='d')
     dates = pd.to_datetime(dates)
 
     print("GETTING VIX DATA...")
-    vix_daily = get_data("^VIX", start_date="17/08/2017", interval="1d")
+    vix_daily = get_data("^VIX", start_date="22/03/2012", interval="1d")
     vix_daily.rename(columns = {'adjclose':'vix_close'}, inplace=True)
     vix_daily['date'] = vix_daily.index.values
     vix_daily['date'] = pd.to_datetime(vix_daily['date'])
@@ -21,7 +20,7 @@ def getData():
 
 
     print("GETTING SOME GOLD...")
-    gvz_daily = get_data("^GVZ", start_date="17/08/2017", interval="1d")
+    gvz_daily = get_data("^GVZ", start_date="22/03/2012", interval="1d")
     gvz_daily.rename(columns = {'adjclose':'gvz_close'}, inplace=True)
     gvz_daily['date'] = gvz_daily.index.values
     gvz_daily['date'] = pd.to_datetime(gvz_daily['date'])

@@ -130,5 +130,5 @@ def addIndicators():
         df=RSI(df,10)
         df=MACD(df,5,10)
         df=mass_index(df)
-        df = df.dropna()
+        df = df.fillna(0)
         df.to_csv(f"../data/processed/{crypto}_finaldb.csv", index=False)

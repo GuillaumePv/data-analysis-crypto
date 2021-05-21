@@ -46,10 +46,6 @@ def mergeBinance():
     list_df = []
     for i in range(len(list_ticker)):
         df = pd.read_csv(f"../data/raw/{list_ticker[i]}_data_binance.csv")
-        df['date'] = pd.to_datetime(df['Date'], unit='s')
-        df = df.drop('Date', axis=1)
-        del df['Ignore']
-        del df['CloseTime']
         list_df.append(df)
 
 
@@ -65,9 +61,9 @@ def mergeBinance():
 
     for tweet in list_tweet:
         df = pd.read_csv(tweet)
-        df['date'] = pd.to_datetime(df['date'])
+        #df['date'] = pd.to_datetime(df['date'])
         list_tweet_df.append(df.sort_values('date'))
 
     for i in range(len(list_df)):
-        df_outer = list_df[i].merge(list_tweet_df[i], on=['date'], how='left')
+        df_outer = list_df[i].merge(list_tweet_df[i], on=['date'], how='left') #beug ici
         df_outer.to_csv(clean_data_path+list_ticker[i]+'_finaldb.csv', index=False)
