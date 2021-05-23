@@ -1,16 +1,50 @@
+## Libairies to manage paths
 from os import chdir, getcwd
+import os
 from pathlib import Path
+
+# Scientific librairies
 import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
+
+from tqdm import tqdm
+##à voir pour enlever
+import sys
+#sys.path.append("..")
+from data import Data
 
 # A method which works well with python 3.4 +
 path_original = Path(__file__).resolve().parents[1]
-print(path_original)
+#print(path_original)
 path_data = (path_original / "./data/raw/").resolve()
 path_data_processed = (path_original / "./data/processed/").resolve()
-path_plot = (path_original / "./plots/").resolve()
-#chdir(path_original)
-#chdir(path_data)
-print(getcwd())
 
-df = pd.read_csv(str(path_data)+"/BTC_data_binance.csv")
-print(df)
+# add condition to see if there exist otherwise create a folder
+path_plot = (path_original / "./plots/").resolve()
+if(os.path.isdir(path_plot) == False):
+    os.mkdir(path_plot)
+
+path_latex = (path_original / "./latex/").resolve()
+if(os.path.isdir(path_latex) == False):
+    os.mkdir(path_latex)
+
+## Loading data ##
+data = Data("BTC")
+data.load_data(pump_thresold=0.02)
+#choose for our estimation
+data.create_RNN_data(reg='Return',LAG=10)
+
+data.df.corr()[['Close_ret_t+1','pump_5']].to_latex(str(path_latex)+"/corr_return_pump.tex")
+# for columns in tqdm(data.df.columns):
+#     if columns != "pump_5" and columns != 'date':
+#         fig = plt.figure(figsize=(10,5))
+#         plt.scatter(data.df["pump_5"],data.df[columns])
+#         plt.xlabel("return t+1 > 5% (1: yes / 0: no)")
+#         plt.ylabel(columns)
+#         plt.grid(True)
+#         #plt.show()
+#         plt.savefig(str(path_plot)+f"/{columns}_corr_pump.png")
+
