@@ -41,6 +41,10 @@ import tensorflow as tf
 np.random.seed(1234)
 tf.random.set_seed(1234)
 
+print(40*"=")
+print("INITIALIZATING THE MODEL")
+print(40*"=")
+
 #Initialization Data
 data = Data("EOS")
 thresold_pump = 0.01

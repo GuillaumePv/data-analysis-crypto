@@ -1,6 +1,11 @@
 import numpy
 import pandas as pd
 import math as m
+from pathlib import Path
+
+path_original = Path(__file__).resolve().parents[1]
+path_data = (path_original / "../data/raw/").resolve()
+path_data_processed = (path_original / "../data/processed/").resolve()
 
 #Moving Average
 def MA(df, n):
@@ -124,11 +129,11 @@ def addIndicators():
     cryptos = ['BTC', 'ETH', 'EOS']
     for crypto in cryptos:
         print(f"ADDING INDICATORS TO {crypto}...")
-        df = pd.read_csv(f"../data/processed/{crypto}_finaldb.csv")
+        df = pd.read_csv(str(path_data_processed) + f"/{crypto}_finaldb.csv")
         df=MA(df, 10)
         df=ADX(df,2,7)
         df=RSI(df,10)
         df=MACD(df,5,10)
         df=mass_index(df)
         df = df.fillna(0)
-        df.to_csv(f"../data/processed/{crypto}_finaldb.csv", index=False)
+        df.to_csv(str(path_data_processed) + f"/{crypto}_finaldb.csv", index=False)
