@@ -13,19 +13,26 @@ PYTHON = python3
 
 # The @ makes sure that the command itself isn't echoed in the terminal
 help:
-	@echo "---------------HELP-----------------"
+	@echo "---------------HELP-------------------------------"
 	@echo "To run the whole project type make run"
 	@echo "To fetch raw data type make fetch"
 	@echo "To process data type make process"
+	@echo "To obtain descriptive statistics type make stats"
 	@echo "To run the model type make model"
-	@echo "------------------------------------"
+	@echo "To clean "plot" folder type make cleanplots"
+	@echo "To clean "latex" folder type make cleanlatex"
+	@echo "--------------------------------------------------"
 
 run:
 	${PYTHON} scripts/getData.py
+	${PYTHON} scripts/descrip_stats.py
 	${PYTHON} scripts/models.py
 
 fetch:
 	${PYTHON} scripts/fetch.py
+
+stats:
+	${PYTHON} scripts/descrip_stats.py
 
 process:
 	${PYTHON} scripts/process.py
@@ -35,4 +42,11 @@ model:
 
 # In this context, the *.project pattern means "anything that has the .project extension"
 clean:
-	rm -r *.json *.csv
+	rm -rf *.json *.csv
+
+cleanplots:
+	rm -rf plots/*.png
+	rm -rf notebooks/*.png
+
+cleanlatex:
+	rm -rf latex/*.tex
