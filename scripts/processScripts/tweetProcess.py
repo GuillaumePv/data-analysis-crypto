@@ -2,11 +2,16 @@ import pandas as pd
 import numpy as np
 import json
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from pathlib import Path
+
+path_original = Path(__file__).resolve().parents[1]
+path_data = (path_original / "../data/raw/").resolve()
+path_data_processed = (path_original / "../data/processed/").resolve()
 
 def processTweet(name):
     print(f"PROCESSING {name} TWEETS...")
     #Twitter data
-    dft = pd.read_json(f"../data/raw/{name}_data_tweet.json", lines = True,  orient='records')
+    dft = pd.read_json(str(path_data) + f"/{name}_data_tweet.json", lines = True,  orient='records')
 
     #date formatting
     dft['date'] = pd.to_datetime(dft['created_at'])
@@ -63,7 +68,7 @@ def processTweet(name):
             else:
                 dfF.loc[i, j] = 0
 
-    dfF.to_csv(f"../data/processed/{name}_tweet_clean.csv",index=False)
+    dfF.to_csv(str(path_data_processed) + f"/{name}_tweet_clean.csv",index=False)
     print(f"FINISHED PROCESSING {name} TWEETS")
 
 def cleanTweets():

@@ -2,6 +2,11 @@ from yahoo_fin.stock_info import get_data
 from datetime import date
 import pandas as pd
 import numpy as np
+from pathlib import Path
+
+path_original = Path(__file__).resolve().parents[1]
+path_data = (path_original / "../data/raw/").resolve()
+path_data_processed = (path_original / "../data/processed/").resolve()
 
 def getData():
     dates = pd.date_range("17/08/2017", end=date.today(), freq='d')
@@ -40,8 +45,8 @@ def getData():
     ticker_list = ['BTC', 'ETH', 'EOS']
 
     for ticker in ticker_list:
-        final_df = pd.read_csv(f'../data/processed/{ticker}_finaldb.csv')
+        final_df = pd.read_csv(str(path_data_processed) + f'/{ticker}_finaldb.csv')
         final_df['date'] = pd.to_datetime(final_df['date'])
         final = final_df.merge(yahoo_df, right_on='date', left_on='date')
         final = final.dropna()
-        final.to_csv(f"../data/processed/{ticker}_finaldb.csv", index=False)
+        final.to_csv(str(path_data_processed) + f"/{ticker}_finaldb.csv", index=False)

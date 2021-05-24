@@ -3,10 +3,15 @@ import os
 import sys
 from pathlib import Path
 import json
+from pathlib import Path
 
 #data science librairies
 import numpy as np
 import pandas as pd
+
+path_original = Path(__file__).resolve().parents[1]
+path_data = (path_original / "../data/raw/").resolve()
+path_data_processed = (path_original / "../data/processed/").resolve()
 
 '''
 data_path = "../data/raw/"
@@ -45,16 +50,16 @@ def mergeBinance():
 
     list_df = []
     for i in range(len(list_ticker)):
-        df = pd.read_csv(f"../data/raw/{list_ticker[i]}_data_binance.csv")
+        df = pd.read_csv(str(path_data) + f"/{list_ticker[i]}_data_binance.csv")
         list_df.append(df)
 
 
-    clean_data_path = "../data/processed/"
+    clean_data_path = str(path_data_processed) + "/"
 
     ## Path
-    tweetETH = "../data/processed/ETH_tweet_clean.csv"
-    tweetBTC = "../data/processed/BTC_tweet_clean.csv"
-    tweetEOS = "../data/processed/EOS_tweet_clean.csv"
+    tweetETH = str(path_data_processed) + "/ETH_tweet_clean.csv"
+    tweetBTC = str(path_data_processed) + "/BTC_tweet_clean.csv"
+    tweetEOS = str(path_data_processed) + "/EOS_tweet_clean.csv"
 
     list_tweet = [tweetETH,tweetBTC,tweetEOS]
     list_tweet_df = []

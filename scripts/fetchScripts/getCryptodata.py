@@ -14,13 +14,18 @@ import csv
 from pandas_datareader import data
 import pandas as pd
 import datetime as dt
+from pathlib import Path
+
+path_original = Path(__file__).resolve().parents[1]
+path_data = (path_original / "../data/raw/").resolve()
+path_data_processed = (path_original / "../data/processed/").resolve()
 
 ## Binance API
 def obtain_cryptodata(Cryptoname):
     client = Client(api_key, api_secret)
     print(f"FETCHING BINANCE DATA FOR {Cryptoname}...")
     start_date = "1 Dec, 2012"
-    csvfile = open(f'../data/raw/{Cryptoname}_data_binance.csv', 'w',newline='')
+    csvfile = open(str(path_data) + f'/{Cryptoname}_data_binance.csv', 'w',newline='')
     candlestick_writer= csv.writer(csvfile, delimiter=',')
 
     # appel de Binance API pour avoir les données
@@ -41,12 +46,12 @@ def obtainCrypto_yahoofinance(Cryptoname):
     #@title Date fields
     end_date = str(dt.datetime.now().date())
     #end_date = '2020-12-31'
-    df = data.DataReader(f"{Cryptoname}-USD", 
-                       start=start_date, 
-                       end=end_date, 
+    df = data.DataReader(f"{Cryptoname}-USD",
+                       start=start_date,
+                       end=end_date,
                        data_source='yahoo')
     df['date'] = df.index
-    df.to_csv(f'../data/raw/{Cryptoname}_data_binance.csv')
+    df.to_csv(str(path_data) + f'/{Cryptoname}_data_binance.csv')
 
 def getRawCrypto():
 

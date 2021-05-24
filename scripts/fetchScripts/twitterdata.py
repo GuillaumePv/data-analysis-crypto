@@ -1,4 +1,9 @@
 import twint
+from pathlib import Path
+
+path_original = Path(__file__).resolve().parents[1]
+path_data = (path_original / "../data/raw/").resolve()
+path_data_processed = (path_original / "../data/processed/").resolve()
 
 def getTweets():
 
@@ -22,7 +27,7 @@ def getTweets():
         c.Verified = True
         c.Lang = "en"
         c.Min_replies = 1 # min replies
-        c.Output = f"../data/raw/{name[0]}_data_tweet.json"
+        c.Output = str(path_data) + f"/{name[0]}_data_tweet.json"
         c.Since = "2014-09-15"
         c.Store_json = True
         c.Hide_output = True
