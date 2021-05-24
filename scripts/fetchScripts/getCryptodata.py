@@ -51,9 +51,10 @@ def obtainCrypto_yahoofinance(Cryptoname):
                        end=end_date,
                        data_source='yahoo')
     df['date'] = df.index
-    df.to_csv(str(path_data) + f'/{Cryptoname}_data_binance.csv')
+    df.to_csv(str(path_data) + f'/{Cryptoname}_data.csv')
 
 def getRawCrypto():
+    print("GETTING CRYPTO RAW DATA")
 
     ticker_list=['BTC', 'ETH', 'EOS']
 

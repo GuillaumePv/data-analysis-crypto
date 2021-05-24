@@ -5,6 +5,7 @@ from pathlib import Path
 #project modules
 import fetchScripts.getCryptodata as cryptoRaw
 import fetchScripts.twitterdata as twitterRaw
+import fetchScripts.pytrendFetch as pytrendRaw
 
 path_original = Path(__file__).resolve().parents[1]
 path_data_origin = (path_original / "./data/").resolve()
@@ -20,6 +21,7 @@ def fetchData():
 
     cryptoRaw.getRawCrypto()
     twitterRaw.getTweets()
+    pytrendRaw.addPytrend()
 
 
 
