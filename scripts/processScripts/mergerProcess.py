@@ -50,7 +50,7 @@ def mergeBinance():
 
     list_df = []
     for i in range(len(list_ticker)):
-        df = pd.read_csv(str(path_data) + f"/{list_ticker[i]}_data_binance.csv")
+        df = pd.read_csv(str(path_data) + f"/{list_ticker[i]}_data.csv")
         list_df.append(df)
 
 
@@ -72,3 +72,12 @@ def mergeBinance():
     for i in range(len(list_df)):
         df_outer = list_df[i].merge(list_tweet_df[i], on=['date'], how='left') #beug ici
         df_outer.to_csv(clean_data_path+list_ticker[i]+'_finaldb.csv', index=False)
+
+    #Adding the pytrend data
+
+    for crypto in [('bitcoin', 'BTC'), ('ethereum', 'ETH'), ('eos', 'EOS')]:
+        dfTrend = pd.read_csv(str(path_data) + f'/{crypto[0]}_data_trend.csv')
+        df = pd.read_csv(clean_data_path+crypto[1]+'_finaldb.csv')
+        df = df.merge(dfTrend, on=['date'], how='right')
+        df = df[df['Close'] > 0]
+        df.to_csv(clean_data_path+crypto[1]+'_finaldb.csv', index=False)

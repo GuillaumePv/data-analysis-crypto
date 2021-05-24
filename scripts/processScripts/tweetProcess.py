@@ -64,7 +64,7 @@ def processTweet(name):
         #create binary in function of influencer
         for j in top10:
             if dfPartial['username'].str.contains(j).sum() > 0:
-                dfF.loc[i, j] = 1
+                dfF.loc[i, j] = dfPartial['username'].str.contains(j).sum()
             else:
                 dfF.loc[i, j] = 0
 
