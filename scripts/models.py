@@ -49,7 +49,7 @@ for crypto in cryptos:
 
     #Initialization Data
     data = Data(crypto)
-    thresold_pump = 0.03
+    thresold_pump = 0.02
     model_type = 'Return'
     data.load_data(pump_thresold=thresold_pump)
 
@@ -82,7 +82,7 @@ for crypto in cryptos:
     drop_out = 0.2
     optimizer = "adam"
 
-    model=RNN()
+    model=RNN(crypto)
 
     # # add callback for early stopping
     model.create_model(data,architecture=architecture,batch_normalization=True,activation=activation_fct,drop_out=drop_out,opti=optimizer)

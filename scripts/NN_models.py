@@ -8,9 +8,10 @@ from sklearn.metrics import auc, confusion_matrix, accuracy_score
 
 
 class DNN:
-    def __init__(self):
+    def __init__(self,name):
         self.model = None
         self.hist_training = None
+        self.name = name
 
     def create_model(
             self,
@@ -157,17 +158,18 @@ class DNN:
             # the keras command to launch the training routine
             history_training = self.model.fit(x=data.X_tr, y=data.y_tr, batch_size=bs, epochs=epoch, validation_data=val_dataset, verbose=verbose)
         print('### training finish \n')
-
+        self.model.save(f"./models/{self.name}_model.h5")
         # return the history of training process
         self.hist_training = pd.DataFrame(history_training.history)
 
 
 
 class RNN(DNN):
-    def __init__(self):
-        super().__init__()
+    def __init__(self,name):
+        super().__init__(name)
         self.model = None
         self.hist_training = None
+        #self.name = name
 
     def _create_network(self, data, architecture, batch_normalization,activation, drop_out):
 
