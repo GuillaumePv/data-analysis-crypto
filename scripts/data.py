@@ -41,27 +41,33 @@ class Data:
         
         #print(y)
         X = []
-        xx = self.df[columns]
+        X_c = []
+        xx = self.df[columns].iloc[1:,:].values
         for i in range(LAG+1,0-1,-1):
             if i > 0:
-                X.append(xx[LAG+1 - i:-i])
+                X.append(y[LAG+1 - i:-i])
+                X_c.append(xx[LAG+1 - i:-i])
             else:
-                X.append(xx[LAG+1 - i:])
+                X.append(y[LAG+1 - i:])
+                X_c.append(xx[LAG+1 - i:])
 
         X = np.concatenate(X, 1)
+        #print(len(X_c))
+        X_c = np.concatenate(X_c,1)
         y = y[-X.shape[0]:,:]
         
         X = X.reshape((X.shape[0], X.shape[1], 1)) # add the input dimension !
-       
+        X_c = X_c.reshape((X_c.shape[0], X_c.shape[1], 1))
         y = y[:-1,:]
 
+        X = X_c[:-1,:]
         #======================
         # LSTM classification #
         #======================
         y = np.concatenate((np.where(y>pump_thresold,1,0),np.where(y<=pump_thresold,1,0)),axis=1)
 
         #standardize X
-        X = X[:-1,:]
+        
         ind = np.arange(0, y.shape[0], 1)
         tr = int(np.ceil(len(ind) * 0.7))
         te = int(np.ceil(len(ind) * 0.9))
@@ -76,6 +82,6 @@ class Data:
 
 if __name__ == "__main__":
     data = Data("BTC")
-    data.load_data()
+    data.load_data(pump_thresold=0.05)
     #choose for our estimation
-    data.create_RNN_data(reg='return',LAG=10)
+    data.create_RNN_data(reg='Return',LAG=10)

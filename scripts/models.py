@@ -85,10 +85,10 @@ for crypto in cryptos:
     model=RNN()
 
     # # add callback for early stopping
-    # model.create_model(data,architecture=architecture,batch_normalization=True,activation=activation_fct,drop_out=drop_out,opti=optimizer)
-    # model.train_model(data,verbose=0,epoch=20)
-    # model.show_performance(label_='Error graph',data=data)
-    # pred=model.model(data.X_te)
+    model.create_model(data,architecture=architecture,batch_normalization=True,activation=activation_fct,drop_out=drop_out,opti=optimizer)
+    model.train_model(data,verbose=0,epoch=10)
+    model.show_performance(label_='Error graph',data=data)
+    pred=model.model(data.X_te)
 
     # plt.plot(pred.numpy().flatten(),color='k',label='Pred')
     # plt.plot(data.y_te.flatten(),color='blue',linestyle='--',label='True')
@@ -158,6 +158,10 @@ for crypto in cryptos:
     print("\n","Confusion Matrix")
     print(confusion_matrix(y_test, clf.predict(X_test)))
 
+
+    #tester un SVM
+
+    # changer avec sigmoid
     # plot decision Tree
     #plot_tree(clf)
 # %%

@@ -63,9 +63,9 @@ class DNN:
             # mean absolute error -> mae
             # accracy
             model.compile(loss=tf.keras.losses.BinaryCrossentropy(from_logits=False), optimizer=optimizer, metrics=['accuracy', 'mae'])
-        if verbose:
+        #if verbose:
             # if specified, print the network architecture
-            print(model.summary())
+        print(model.summary())
         self.model = model
 
     def _create_network(self, data, architecture, batch_normalization, activation, drop_out):
@@ -113,7 +113,7 @@ class DNN:
             plt.ylabel('cross entropy loss')  # if its a classification, we plot the cross entropy loss
         plt.title(label_)
         plt.savefig(label_ + '.png')
-        plt.show()
+        #plt.show()
 
         if output_dim == 1:
             # if regression, compute the out of sample performance measure
@@ -186,7 +186,6 @@ class RNN(DNN):
             if batch_normalization:
                 # add batch normalization if specified
                 L.append(tf.keras.layers.BatchNormalization(momentum=0.8))
-
 
         # add the final layer
         if output_dim == 1:
