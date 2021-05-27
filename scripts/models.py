@@ -49,7 +49,7 @@ for crypto in cryptos:
 
     #Initialization Data
     data = Data(crypto)
-    thresold_pump = 0.01
+    thresold_pump = 0.03
     model_type = 'Return'
     data.load_data(pump_thresold=thresold_pump)
 
@@ -61,12 +61,12 @@ for crypto in cryptos:
     features = data.df.iloc[:,3:-2].columns # select features for our model
     features = features.drop('date')
 
-
+    print(features)
     #==============
     # Creating Data
     #==============
     #choose for our estimation
-    data.create_RNN_data(reg=model_type,LAG=5,columns=features,pump_thresold=thresold_pump)
+    data.create_RNN_data(reg=model_type,LAG=10,columns=features,pump_thresold=thresold_pump)
     print(f'dimension of data: {data.df.shape}')
 
     #%%
@@ -116,7 +116,7 @@ for crypto in cryptos:
     # plt.show()
     feature_names = [column for column in X.columns]
 
-    pct_split = 0.3
+    pct_split = 0.2
     split = int((1-pct_split)*len(X))
     X_train, X_test, y_train, y_test = X_scaled[:split],X_scaled[split:], y[:split], y[split:]
 

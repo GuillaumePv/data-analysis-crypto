@@ -42,6 +42,7 @@ class Data:
         #print(y)
         X = []
         X_c = []
+        #add Close_ret_t+1
         xx = self.df[columns].iloc[1:,:].values
         for i in range(LAG+1,0-1,-1):
             if i > 0:
