@@ -19,6 +19,7 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import pickle
+from pickle import load
 
 import sys
 import warnings
@@ -134,8 +135,8 @@ for crypto in cryptos:
     # standardize and choose our data
     X = data.df[features]
 
+    scaler = load(open(str(path_model)+'/scaler.pkl', 'rb'))
     # Standardize date
-    scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
 
@@ -160,7 +161,7 @@ for crypto in cryptos:
     filename = str(path_model)+f'/{crypto}_rf_finalized_model.sav'
     pickle.dump(randomForest, open(filename, 'wb'))
     print("=== Random forest model saved !! ===")
-    
+
     pscore_train = accuracy_score(y_test, randomForest.predict(X_test))
     accurracy_list.append(pscore_train)
     print(f'Accruracy score: {pscore_train}')

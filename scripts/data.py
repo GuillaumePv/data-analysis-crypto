@@ -2,6 +2,23 @@ import numpy as np
 import pandas as pd
 from sklearn import datasets
 import sklearn
+from sklearn.preprocessing import StandardScaler
+from pickle import dump
+
+
+#==========================
+# Libairies to manage paths
+#=========================
+from os import chdir, getcwd
+import os
+from pathlib import Path
+
+path_original = Path(__file__).resolve().parents[1]
+
+path_model = (path_original / "./models/").resolve()
+if(os.path.isdir(path_model) == False):
+    os.mkdir(path_model)
+
 
 
 class Data:
@@ -43,7 +60,13 @@ class Data:
         X = []
         X_c = []
         #add Close_ret_t+1
-        xx = self.df[columns].iloc[1:,:].values
+        scaler = StandardScaler()
+        scaler.fit(self.df[columns].iloc[1:,:].values)
+
+        # save scaler
+        dump(scaler, open(str(path_model)+'/scaler.pkl', 'wb'))
+
+        xx = scaler.transform(self.df[columns].iloc[1:,:].values)
         for i in range(LAG+1,0-1,-1):
             if i > 0:
                 X.append(y[LAG+1 - i:-i])
