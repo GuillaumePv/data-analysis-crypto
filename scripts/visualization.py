@@ -5,6 +5,7 @@ from pathlib import Path
 
 ## Scienttific libraries ##
 import matplotlib.pyplot as plt
+import matplotlib
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -41,7 +42,7 @@ data_eos.df.index = pd.to_datetime(data_eos.df['date'])
 
 
 #===============
-# Return Graphs 
+# Distribution Graphs 
 #===============
 
 plt.figure(figsize=(15,5))
@@ -96,6 +97,152 @@ plt.subplot(133)
 plt.plot((data_eos.df['Close_ret_t+1']+1).cumprod(),color="gray")
 plt.title("Cumulative return of EOS return")
 plt.grid(True)
+plt.gca().xaxis.set_major_locator(matplotlib.dates.YearLocator())
+plt.gca().xaxis.set_major_formatter(matplotlib.dates.DateFormatter('%Y'))
 plt.tight_layout()
 
 plt.savefig(str(path_plot)+"/Cumulative_return_graph.png")
+
+
+#==================
+# Close Price Graph
+#==================
+
+plt.figure(figsize=(15,5))
+
+plt.subplot(131)
+plt.plot(data_btc.df['Close'],color="orange")
+plt.title("Close Price of Bitcoin")
+plt.xlabel('Date')
+plt.ylabel("Close price ($)")
+plt.grid(True)
+
+plt.subplot(132)
+plt.plot(data_eth.df['Close'],color="black")
+plt.title("Close Price of Ethereum")
+plt.xlabel('Date')
+plt.ylabel("Close price ($)")
+plt.grid(True)
+
+plt.subplot(133)
+plt.plot(data_eos.df['Close'],color="gray")
+plt.title("Close Price of EOS")
+plt.xlabel('Date')
+plt.ylabel("Close price ($)")
+plt.gca().xaxis.set_major_locator(matplotlib.dates.YearLocator())
+plt.gca().xaxis.set_major_formatter(matplotlib.dates.DateFormatter('%Y'))
+plt.grid(True)
+
+plt.savefig(str(path_plot)+"/Close_price_graph.png")
+
+
+#=====================================
+# Train / Test splitting Sklearn model
+#=====================================
+
+plt.figure(figsize=(15,5))
+
+plt.subplot(131)
+X = data_btc.df['Close_ret_t+1']
+ind = np.arange(0, X.shape[0], 1)
+tr = int(np.ceil(len(ind) * 0.7))
+te = int(np.ceil(len(ind) * 0.9))
+X_tr = X[:tr]
+X_te = X[tr:te]
+X_va = X[te:]
+
+plt.plot(X_tr,label='train')
+plt.plot(X_te,label='test')
+plt.plot(X_va,label='validation')
+plt.legend()
+plt.grid(True)
+plt.ylabel('Return')
+plt.title("BTC Return")
+
+plt.subplot(132)
+X = data_eth.df['Close_ret_t+1']
+ind = np.arange(0, X.shape[0], 1)
+tr = int(np.ceil(len(ind) * 0.7))
+te = int(np.ceil(len(ind) * 0.9))
+X_tr = X[:tr]
+X_te = X[tr:te]
+X_va = X[te:]
+
+plt.plot(X_tr,label='train')
+plt.plot(X_te,label='test')
+plt.plot(X_va,label='validation')
+plt.legend()
+plt.grid(True)
+plt.ylabel('Return')
+plt.title("ETH Return")
+
+plt.subplot(133)
+X = data_eos.df['Close_ret_t+1']
+ind = np.arange(0, X.shape[0], 1)
+tr = int(np.ceil(len(ind) * 0.7))
+te = int(np.ceil(len(ind) * 0.9))
+X_tr = X[:tr]
+X_te = X[tr:te]
+X_va = X[te:]
+
+plt.plot(X_tr,label='train')
+plt.plot(X_te,label='test')
+plt.plot(X_va,label='validation')
+plt.legend()
+plt.grid(True)
+plt.ylabel('Return')
+plt.gca().xaxis.set_major_locator(matplotlib.dates.YearLocator())
+plt.gca().xaxis.set_major_formatter(matplotlib.dates.DateFormatter('%Y'))
+plt.title("EOS Return")
+plt.tight_layout()
+
+plt.savefig(str(path_plot)+"/train_test__val_split_LSTM_graph.png")
+
+#=====================================
+# Train / Test splitting Sklearn model
+#=====================================
+
+X = data_btc.df['Close_ret_t+1']
+pct_split = 0.2
+split = int((1-pct_split)*len(X))
+X_train, X_test = X[:split],X[split:]
+
+plt.figure(figsize=(15,5))
+
+plt.subplot(131)
+plt.plot(X_train, label='train')
+plt.plot(X_test,label='test')
+plt.grid(True)
+plt.legend()
+plt.ylabel('Return')
+plt.title("BTC Return")
+
+X = data_eth.df['Close_ret_t+1']
+pct_split = 0.2
+split = int((1-pct_split)*len(X))
+X_train, X_test = X[:split],X[split:]
+plt.subplot(132)
+plt.plot(X_train, label='train')
+plt.plot(X_test,label='test')
+plt.grid(True)
+plt.legend()
+plt.ylabel('Return')
+plt.title("ETH Return")
+
+X = data_eos.df['Close_ret_t+1']
+pct_split = 0.2
+split = int((1-pct_split)*len(X))
+X_train, X_test = X[:split],X[split:]
+plt.subplot(133)
+plt.plot(X_train, label='train')
+plt.plot(X_test,label='test')
+plt.grid(True)
+plt.legend()
+plt.ylabel('Return')
+plt.gca().xaxis.set_major_locator(matplotlib.dates.YearLocator())
+plt.gca().xaxis.set_major_formatter(matplotlib.dates.DateFormatter('%Y'))
+plt.title("EOS Return")
+
+plt.tight_layout()
+
+plt.savefig(str(path_plot)+"/train_test_split_sklearn_graph.png")
