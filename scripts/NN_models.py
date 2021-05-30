@@ -115,7 +115,10 @@ class DNN:
         else:
             plt.ylabel('cross entropy loss')  # if its a classification, we plot the cross entropy loss
         plt.title(label_)
-        plt.savefig(label_ + '.png')
+        if self.conv1D:
+            plt.savefig("./plots/"+label_ + f'_Conv1D_{self.name}.png')
+        else:
+            plt.savefig("./plots/"+label_ + f'_{self.name}.png')
         #plt.show()
 
         if output_dim == 1:
