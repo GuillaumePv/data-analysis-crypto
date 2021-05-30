@@ -19,17 +19,18 @@ pip3 install -r requirements.txt
 put datasets in the "raw" folder 
 
 # Project structure
+https://github.com/hbast/pyTree
 
 ```
 ├── README.md          <- The top-level README for developers using this project.
 │
-├── Makefile           <- The top-level README for developers using this project.
+├── Makefile           <- makefile to run project or each part of project
 │
 ├── data
 │   ├── processed      <- The final, canonical data sets for modeling.
 │   └── raw            <- The original, immutable data dump.
 │
-├── docs               <- A default Sphinx project; see sphinx-doc.org for details
+│
 │
 ├── models             <- Trained and serialized models, model predictions, or model summaries
 │
@@ -37,50 +38,39 @@ put datasets in the "raw" folder
 │                         the creator's initials, and a short `-` delimited description, e.g.
 │                         `1.0-jqp-initial-data-exploration`.
 │
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
 │
 ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
 │                         generated with `pip freeze > requirements.txt`
 │
-├── src                <- Source code for use in this project.
-│   ├── __init__.py    <- Makes src a Python module
+├── scripts            <- Source code for use in this project.
 │   │
-│   ├── data           <- Scripts to download or generate data
+│   ├── fetchScripts           <- Scripts to download or generate data
 │   │   └── make_dataset.py
 │   │
-│   ├── features       <- Scripts to turn raw data into features for modeling
+│   ├── processScripts       <- Scripts to turn raw data into features for modeling
 │   │   └── build_features.py
 │   │
-│   ├── models         <- Scripts to train models and then use trained models to make
-│   │   │                 predictions
-│   │   ├── predict_model.py
-│   │   └── train_model.py
+│   ├── NN_models.py   <- Librairy to create and analyze LSTM and Conv1D_LSTM models
 │   │
-│   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-│       └── visualize.py
+│   ├── data.py         <- Library to process our final dataset to provide features for our LSTM and Conv1D-LSTM
+│   │
+│   ├── models.py         <- Script to train models and then use trained models to make
+│   │
+│   ├── descript_stats.py         <- Script to train models and then use trained models to make
+│   │
+│   ├── getData.py         <- Script to create, merge and process our datasets
+│   │
+│   └── visualization.py  <- Script to create exploratory and results oriented visualizations
 │
 ```
 # TO-DO
-- [x] obtenir twitter data
+- [x] obtain twitter data
 - [x] data macro => S&P, VIX, GVZ (gold index CBOE) => Yahoo finance
-- [ ] faire statistiques descriptives
-- [ ] voir si besoind de réduire la dimension des données
-- [ ] faire makefile qui run toutes les parties
-- [x] faire classification des models
-- [ ] corriger nom des fichiers excels
+- [x] make descriptive statistics
+- [x] create makefile to run all project
+- [x] do classification of model performance
+- [x] corrext excel name
 - [x] create a structure tree for the report
-https://github.com/hbast/pyTree
 
-- [ ] paramétrer les output du notebooks pour éviter que ça prenne trop de storage pour github
-- [ ] test hyperparameter: https://blog.tensorflow.org/2020/01/hyperparameter-tuning-with-keras-tuner.html
-- [ ] tester les modèles
 
-# INFOS
-- https://www.reddit.com/r/BinanceExchange/comments/96iymr/api_nomenclature_taker_buy_base_asset_volume_vs/
 
-## New Ideas
-- take signal -> derivate of fourier equal to 0
-- https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f
