@@ -20,7 +20,8 @@ help:
 	@echo "To fetch raw data type make fetch"
 	@echo "To process data type make process"
 	@echo "To obtain descriptive statistics type make stats"
-	@echo "To run the model type make model"
+	@echo "To create our different graph type make visualization"
+	@echo "To run the model type make models"
 	@echo "To clean "plot" folder type make cleanplots"
 	@echo "To clean "latex" folder type make cleanlatex"
 	@echo "--------------------------------------------------"
@@ -39,8 +40,11 @@ stats:
 process:
 	${PYTHON} scripts/process.py
 
-model:
+models:
 	${PYTHON} scripts/models.py
+
+visualization:
+	${PYTHON} scripts/visualization.py
 
 # In this context, the *.project pattern means "anything that has the .project extension"
 clean:

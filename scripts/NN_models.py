@@ -8,10 +8,11 @@ from sklearn.metrics import auc, confusion_matrix, accuracy_score
 
 
 class DNN:
-    def __init__(self,name):
+    def __init__(self,name, conv1D):
         self.model = None
         self.hist_training = None
         self.name = name
+        self.conv1D = conv1D
 
     def create_model(
             self,
@@ -159,7 +160,10 @@ class DNN:
             # the keras command to launch the training routine
             history_training = self.model.fit(x=data.X_tr, y=data.y_tr, batch_size=bs, epochs=epoch, validation_data=val_dataset, verbose=verbose)
         print('### training finish \n')
-        self.model.save(f"./models/{self.name}_model.h5")
+        if self.conv1D:
+            self.model.save(f"./models/{self.name}_conv1D_model.h5")
+        else:
+            self.model.save(f"./models/{self.name}_model.h5")
         # return the history of training process
         self.hist_training = pd.DataFrame(history_training.history)
 
@@ -167,11 +171,9 @@ class DNN:
 
 class RNN(DNN):
     def __init__(self,name,conv1D):
-        super().__init__(name)
+        super().__init__(name, conv1D)
         self.model = None
         self.hist_training = None
-        self.conv1D = conv1D
-        #self.name = name
 
     def _create_network(self, data, architecture, batch_normalization,activation, drop_out):
 

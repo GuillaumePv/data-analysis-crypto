@@ -122,20 +122,13 @@ for crypto in cryptos:
     print(f'number return <= {thresold_pump}: {np.sum(y==1)}')
     print(f'shape of y: {y.shape}')
 
-    # plt.scatter(X.index,y)
-    # plt.show()
     feature_names = [column for column in X.columns]
 
     pct_split = 0.2
     split = int((1-pct_split)*len(X))
     X_train, X_test, y_train, y_test = X_scaled[:split],X_scaled[split:], y[:split], y[split:]
 
-    #plot to see train test data
-    # X_tr, X_te = X.iloc[:split,:], X.iloc[split:,:]
-    # plt.plot(X_tr.index,X_tr['Close'])
-    # plt.plot(X_te.index,X_te['Close'])
-    # plt.ylabel("Close price ($)")
-    # plt.show()
+  
     print(f'(test) number return <= {thresold_pump}: {np.sum(y_test==1)}')
 
     print("\n","=== Random Forest ===")
