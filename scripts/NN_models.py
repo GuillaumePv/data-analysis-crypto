@@ -192,8 +192,7 @@ class RNN(DNN):
         for i, l in enumerate(architecture):
             if i == 0:
                 if self.conv1D:
-                    L.append(tf.keras.layers.Conv1D(filters=l,kernel_size=2))
-                #L.append(tf.keras.layers.MaxPooling1D(pool_size=2))
+                    L.append(tf.keras.layers.Conv1D(filters=l,kernel_size=2,activation='swish'))
                 L.append(tf.keras.layers.LSTM(l)) # first layer is now an SLTM
             else:
                 L.append(tf.keras.layers.Dense(l, activation=activation))  # add a layer
