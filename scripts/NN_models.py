@@ -13,6 +13,7 @@ class DNN:
         self.hist_training = None
         self.name = name
         self.conv1D = conv1D
+        self.accuracy = None
 
     def create_model(
             self,
@@ -135,9 +136,9 @@ class DNN:
             cf.index = index
             cf.columns = col
             # correct beug
-            accuracy = accuracy_score(y_true=np.argmax(data.y_te, 1), y_pred=np.argmax(pred, 1))
+            self.accuracy = accuracy_score(y_true=np.argmax(data.y_te, 1), y_pred=np.argmax(pred, 1))
             print(cf)
-            print(f'Accuracy score: {accuracy}')
+            print(f'Accuracy score: {self.accuracy}')
 
     def train_model(self, data, epoch=10, bs=256, verbose=0, tensor_board_name=None):
         assert type(data) == Data, 'the data object must come from the "Data" class'

@@ -1,4 +1,11 @@
-#%%
+
+#==========================
+# Libairies to manage paths
+#=========================
+from os import chdir, getcwd
+import os
+from pathlib import Path
+
 #================
 # Plot librairies
 #================
@@ -41,8 +48,17 @@ import tensorflow as tf
 np.random.seed(1234)
 tf.random.set_seed(1234)
 
+# A method which works well with python 3.4 +
+path_original = Path(__file__).resolve().parents[1]
+
+path_latex = (path_original / "./latex/").resolve()
+if(os.path.isdir(path_latex) == False):
+    os.mkdir(path_latex)
+
 cryptos = ["BTC","ETH","EOS"]
+data_list = []
 for crypto in cryptos:
+    accurracy_list = []
     print(40*"=")
     print(f"INITIALIZATING THE MODEL FOR {crypto}")
     print(40*"=")
@@ -89,8 +105,9 @@ for crypto in cryptos:
     model.create_model(data,architecture=architecture,batch_normalization=True,activation=activation_fct,drop_out=drop_out,opti=optimizer)
     model.train_model(data,verbose=1,epoch=10)
     model.show_performance(label_='Error graph',data=data)
-    pred=model.model(data.X_te)
+    #pred=model.model(data.X_te)
 
+    accurracy_list.append(model.accuracy)
     print("===== Running conv1D-LSTM =====")
     model=RNN(crypto,True)
 
@@ -98,12 +115,9 @@ for crypto in cryptos:
     model.create_model(data,architecture=architecture,batch_normalization=True,activation=activation_fct,drop_out=drop_out,opti=optimizer)
     model.train_model(data,verbose=1,epoch=10)
     model.show_performance(label_='Error graph',data=data)
-    pred=model.model(data.X_te)
-
-    # plt.plot(pred.numpy().flatten(),color='k',label='Pred')
-    # plt.plot(data.y_te.flatten(),color='blue',linestyle='--',label='True')
-    # plt.legend()
-    # plt.show()
+    #pred=model.model(data.X_te)
+    accurracy_list.append(model.accuracy)
+    
 
     #===============#
     # Simple models #
@@ -136,6 +150,7 @@ for crypto in cryptos:
     randomForest = RandomForestClassifier(criterion='entropy', random_state = 42).fit(X_train,y_train)
 
     pscore_train = accuracy_score(y_test, randomForest.predict(X_test))
+    accurracy_list.append(pscore_train)
     print(f'Accruracy score: {pscore_train}')
     #print(randomForest.predict_proba(X_test))
     clf = confusion_matrix(y_test, randomForest.predict(X_test))
@@ -148,6 +163,7 @@ for crypto in cryptos:
     clf = LogisticRegression().fit(X_train, y_train)
 
     pscore_train = accuracy_score(y_test, clf.predict(X_test))
+    accurracy_list.append(pscore_train)
     print(f'Accruracy score: {pscore_train}')
     print("\n","Confusion Matrix")
     print(confusion_matrix(y_test, clf.predict(X_test)))
@@ -158,6 +174,7 @@ for crypto in cryptos:
     clf = DecisionTreeClassifier().fit(X_train, y_train)
 
     pscore_train = accuracy_score(y_test, clf.predict(X_test))
+    accurracy_list.append(pscore_train)
     print(f'Accruracy score: {pscore_train}')
     print("\n","Confusion Matrix")
     print(confusion_matrix(y_test, clf.predict(X_test)))
@@ -168,4 +185,17 @@ for crypto in cryptos:
     # changer avec sigmoid
     # plot decision Tree
     #plot_tree(clf)
-# %%
+    data_list.append(accurracy_list)
+
+data = {
+    'BTC':data_list[0],
+    'ETH':data_list[1],
+    'EOS':data_list[2]
+}
+# data = {
+#     'BTC':data_list[0],
+# }
+df_result = pd.DataFrame(data)
+df_result.index = ['LSTM','Conv1D_LSTM','Random Forest', 'Logistic Regression','Decision Tree']
+print(df_result)
+df_result.to_latex(str(path_latex)+f"/accuracy_result.tex")
