@@ -25,7 +25,7 @@ class Data:
         self.df['abs_diff_close_open'] = np.abs(self.df['Close'] - self.df['Open'])
         self.df['Close_std'] = (self.df['Close']-self.df['Close'].mean())/self.df['Close'].std()
         self.df['Close_ret_t+1'] = np.log(self.df[['Close']].shift(-1).values/self.df[['Close']].values)
-        self.df['pump_5'] = np.where(self.df['Close_ret_t+1'] > pump_thresold,1,0)
+        self.df['pump_5'] = np.where(self.df['Close_ret_t+1'] <= pump_thresold,1,0)
 
     def create_RNN_data(self,LAG=10,reg="Price",columns=["Volume","tweet_count","vix"],pump_thresold=0.05):
         
@@ -53,7 +53,7 @@ class Data:
                 X_c.append(xx[LAG+1 - i:])
 
         X = np.concatenate(X, 1)
-        #print(len(X_c))
+
         X_c = np.concatenate(X_c,1)
         y = y[-X.shape[0]:,:]
         
@@ -66,6 +66,8 @@ class Data:
         # LSTM classification #
         #======================
         y = np.concatenate((np.where(y>pump_thresold,1,0),np.where(y<=pump_thresold,1,0)),axis=1)
+        #y = np.where(y>pump_thresold,1,0)
+
 
         #standardize X
         

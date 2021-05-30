@@ -49,7 +49,7 @@ for crypto in cryptos:
 
     #Initialization Data
     data = Data(crypto)
-    thresold_pump = 0.02
+    thresold_pump = 0.01
     model_type = 'Return'
     data.load_data(pump_thresold=thresold_pump)
 
@@ -61,7 +61,7 @@ for crypto in cryptos:
     features = data.df.iloc[:,3:-2].columns # select features for our model
     features = features.drop('date')
 
-    print(features)
+    #print(features)
     #==============
     # Creating Data
     #==============
@@ -82,11 +82,21 @@ for crypto in cryptos:
     drop_out = 0.2
     optimizer = "adam"
 
-    model=RNN(crypto)
+    print("===== Running LSTM =====")
+    model=RNN(crypto,False)
 
     # # add callback for early stopping
     model.create_model(data,architecture=architecture,batch_normalization=True,activation=activation_fct,drop_out=drop_out,opti=optimizer)
-    model.train_model(data,verbose=0,epoch=10)
+    model.train_model(data,verbose=1,epoch=10)
+    model.show_performance(label_='Error graph',data=data)
+    pred=model.model(data.X_te)
+
+    print("===== Running conv1D-LSTM =====")
+    model=RNN(crypto,True)
+
+    # # add callback for early stopping
+    model.create_model(data,architecture=architecture,batch_normalization=True,activation=activation_fct,drop_out=drop_out,opti=optimizer)
+    model.train_model(data,verbose=1,epoch=10)
     model.show_performance(label_='Error graph',data=data)
     pred=model.model(data.X_te)
 
@@ -109,7 +119,7 @@ for crypto in cryptos:
 
 
     y = data.df['pump_5'].values
-    print(f'number return > {thresold_pump}: {np.sum(y==1)}')
+    print(f'number return <= {thresold_pump}: {np.sum(y==1)}')
     print(f'shape of y: {y.shape}')
 
     # plt.scatter(X.index,y)
@@ -126,14 +136,15 @@ for crypto in cryptos:
     # plt.plot(X_te.index,X_te['Close'])
     # plt.ylabel("Close price ($)")
     # plt.show()
+    print(f'(test) number return <= {thresold_pump}: {np.sum(y_test==1)}')
 
     print("\n","=== Random Forest ===")
     # https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
-    randomForest = RandomForestClassifier(criterion='entropy',n_estimators = 1000, random_state = 42).fit(X_train,y_train)
+    randomForest = RandomForestClassifier(criterion='entropy', random_state = 42).fit(X_train,y_train)
 
     pscore_train = accuracy_score(y_test, randomForest.predict(X_test))
     print(f'Accruracy score: {pscore_train}')
-
+    #print(randomForest.predict_proba(X_test))
     clf = confusion_matrix(y_test, randomForest.predict(X_test))
     print("\n","Confusion Matrix")
     print(clf)

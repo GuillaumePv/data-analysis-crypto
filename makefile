@@ -13,7 +13,9 @@ PYTHON = python3
 
 # The @ makes sure that the command itself isn't echoed in the terminal
 help:
-	@echo "---------------HELP-------------------------------"
+	@echo "--------------------------------------------------"
+	@echo "----------------------HELP------------------------"
+	@echo "--------------------------------------------------"
 	@echo "To run the whole project type make run"
 	@echo "To fetch raw data type make fetch"
 	@echo "To process data type make process"

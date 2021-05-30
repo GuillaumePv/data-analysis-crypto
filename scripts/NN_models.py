@@ -57,7 +57,7 @@ class DNN:
             # mean absolute error -> mae
             # mean square error -> mse
             # and our custom r-square.
-            model.compile(loss='mae', optimizer=optimizer, metrics=['mae', 'mse', r_square])
+            model.compile(loss=tf.keras.losses.BinaryCrossentropy(from_logits=False), optimizer=optimizer, metrics=['accuracy','mae', 'mse'])
         if output_dim > 1:
             # here we do a classifier ---that, is we predict a percentage of being in one dimension instead of another
             # we have two  metrics:
@@ -88,7 +88,7 @@ class DNN:
 
         # add the final layer
         if output_dim == 1:
-            L.append(tf.keras.layers.Dense(output_dim))
+            L.append(tf.keras.layers.Dense(output_dim,activation='sigmoid'))
         else:
             # if we are doing classification, we wish to normalize the ouput between 0 and 1, hence the softmax
             L.append(tf.keras.layers.Dense(output_dim, activation='softmax'))
@@ -122,6 +122,7 @@ class DNN:
             print('Out of sample performance:')
             self.model.evaluate(data.X_te, data.y_te, verbose=2)
             print('=' * 50)
+            pred = self.model.predict(data.X_te)
 
         else:
             # if classification  print the  confusion matrix
@@ -165,10 +166,11 @@ class DNN:
 
 
 class RNN(DNN):
-    def __init__(self,name):
+    def __init__(self,name,conv1D):
         super().__init__(name)
         self.model = None
         self.hist_training = None
+        self.conv1D = conv1D
         #self.name = name
 
     def _create_network(self, data, architecture, batch_normalization,activation, drop_out):
@@ -179,7 +181,8 @@ class RNN(DNN):
 
         for i, l in enumerate(architecture):
             if i == 0:
-                L.append(tf.keras.layers.Conv1D(filters=l,kernel_size=2))
+                if self.conv1D:
+                    L.append(tf.keras.layers.Conv1D(filters=l,kernel_size=2))
                 #L.append(tf.keras.layers.MaxPooling1D(pool_size=2))
                 L.append(tf.keras.layers.LSTM(l)) # first layer is now an SLTM
             else:
