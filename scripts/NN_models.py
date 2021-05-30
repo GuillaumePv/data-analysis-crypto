@@ -107,13 +107,17 @@ class DNN:
         output_dim = data.y_te.shape[1]
 
         # use the pandas function to start the plot (history training is a PD data frame).
-        self.hist_training[['loss', 'val_loss']].plot()
+        #self.hist_training[['loss', 'val_loss']].plot()
+        self.hist_training[['accuracy', 'val_accuracy']].plot()
         plt.grid(True)  # add a grid for visibiliy
         plt.xlabel('epochs')
         if output_dim == 1:
             plt.ylabel('mean absolute error')  # if its a regression, we plot the mae
         else:
-            plt.ylabel('cross entropy loss')  # if its a classification, we plot the cross entropy loss
+            #plt.ylabel('cross entropy loss')  # if its a classification, we plot the cross entropy loss
+            plt.ylabel('Accuracy')  # if its a classification, we plot the cross entropy loss
+
+        label_ = "Accuracy Graph"
         plt.title(label_)
         if self.conv1D:
             plt.savefig("./plots/"+label_ + f'_Conv1D_{self.name}.png')

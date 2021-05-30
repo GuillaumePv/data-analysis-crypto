@@ -18,6 +18,7 @@ import seaborn as sns
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+import pickle
 
 import sys
 import warnings
@@ -52,8 +53,14 @@ tf.random.set_seed(1234)
 path_original = Path(__file__).resolve().parents[1]
 
 path_latex = (path_original / "./latex/").resolve()
+
 if(os.path.isdir(path_latex) == False):
     os.mkdir(path_latex)
+
+path_model = (path_original / "./models/").resolve()
+if(os.path.isdir(path_model) == False):
+    os.mkdir(path_model)
+
 
 cryptos = ["BTC","ETH","EOS"]
 data_list = []
@@ -149,6 +156,11 @@ for crypto in cryptos:
     # https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
     randomForest = RandomForestClassifier(criterion='entropy', random_state = 42).fit(X_train,y_train)
 
+
+    filename = str(path_model)+f'/{crypto}_rf_finalized_model.sav'
+    pickle.dump(randomForest, open(filename, 'wb'))
+    print("=== Random forest model saved !! ===")
+    
     pscore_train = accuracy_score(y_test, randomForest.predict(X_test))
     accurracy_list.append(pscore_train)
     print(f'Accruracy score: {pscore_train}')
