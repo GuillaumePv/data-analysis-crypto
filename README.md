@@ -53,7 +53,7 @@ https://github.com/hbast/pyTree
 │   │
 │   ├── models.py         <- Script to train models and then use trained models to make
 │   │
-│   ├── descript_stats.py         <- Script to train models and then use trained models to make
+│   ├── descript_stats.py         <- Script to create Decriptive statistics of our dataset
 │   │
 │   ├── getData.py         <- Script to create, merge and process our datasets
 │   │
