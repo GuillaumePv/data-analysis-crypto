@@ -84,6 +84,7 @@ for crypto in cryptos:
 
     features = data.df.iloc[:,3:-2].columns # select features for our model
     features = features.drop('date')
+    features = features.drop('Adj Close')
 
     #print(features)
     #==============
@@ -113,7 +114,6 @@ for crypto in cryptos:
     model.create_model(data,architecture=architecture,batch_normalization=True,activation=activation_fct,drop_out=drop_out,opti=optimizer)
     model.train_model(data,verbose=1,epoch=10)
     model.show_performance(label_='Error graph',data=data)
-    #pred=model.model(data.X_te)
 
     accurracy_list.append(model.accuracy)
     print("===== Running conv1D-LSTM =====")
@@ -123,7 +123,6 @@ for crypto in cryptos:
     model.create_model(data,architecture=architecture,batch_normalization=True,activation=activation_fct,drop_out=drop_out,opti=optimizer)
     model.train_model(data,verbose=1,epoch=10)
     model.show_performance(label_='Error graph',data=data)
-    #pred=model.model(data.X_te)
     accurracy_list.append(model.accuracy)
     
 
@@ -145,7 +144,7 @@ for crypto in cryptos:
     print(f'shape of y: {y.shape}')
 
     feature_names = [column for column in X.columns]
-
+    
     pct_split = 0.2
     split = int((1-pct_split)*len(X))
     X_train, X_test, y_train, y_test = X_scaled[:split],X_scaled[split:], y[:split], y[split:]

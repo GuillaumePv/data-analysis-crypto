@@ -36,7 +36,7 @@ if(os.path.isdir(path_latex) == False):
 
 for crypto_name in ['BTC','ETH','EOS']:
     data = Data(crypto_name)
-    data.load_data(pump_thresold=0.02)
+    data.load_data(pump_thresold=0.01)
     #choose for our estimation
     data.create_RNN_data(reg='Return',LAG=10)
 
