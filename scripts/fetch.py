@@ -16,7 +16,7 @@ def fetchData():
     #creates data directory if it does not exists
     if not os.path.isdir(str(path_data_origin)):
         os.mkdir(str(path_data))
-        os.mkdir(str(path_data))
+        os.mkdir(str(path_data_processed))
 
 
     cryptoRaw.getRawCrypto()

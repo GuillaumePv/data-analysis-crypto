@@ -139,7 +139,7 @@ for crypto in cryptos:
     X_scaled = scaler.fit_transform(X)
 
 
-    y = data.df['pump_5'].values
+    y = data.df['pump'].values
     print(f'number return <= {thresold_pump}: {np.sum(y==1)}')
     print(f'shape of y: {y.shape}')
 
