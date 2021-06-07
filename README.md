@@ -1,18 +1,50 @@
 # Advanced data analysis
 
+# Presentation of the project
+
+## Abstract
+
+The market of cryptocurrencies presents great investment opportunities accompanied by both high potential returns and high risks. It is a new market that is characterized by high volatility and complex factors affecting the path of crypto making the forecasting methods a real challenge for investors and financial analysts. In this paper, we combine the results from the five most used methods of classification in deep learning to highlight the most efficient one in predicting the sign of crypto return. The analysis is based on three cryptocurrencies: Bitcoin, the leader of the market, Ethereum, the second-placed cryptocurrency in respect to market capitalization, and Eos, in the top twenty. The last was taken to test the algorithm accuracy not only on the market giants. Furthermore, for each of the algorithms, we used the same database, Binance, which makes it possible to compare them and to conduct a general conclusion about the adding value of their complexity. In the study, the impact of external social factors such as most popular Twitter posts is considered in addition to the historical trading information about the crypto market. The results of the research show that the accuracy of crypto return predictions is estimated medium to low. In addition, we concluded that simple classification algorithms such as Random Forest could perform as efficiently as the complex algorithm Long Short-Term Memory (LSTM) taking into consideration 28 factors.
+
+## Authors
+
+* Ruben Kempter : ruben.kempter@unil.ch
+* Dimitri André : dimitri.andre@unil.ch
+* Guillaume Pavé : guillaume.pave@unil.ch
+
+## Install libraries and run project
+
+1) Clone project
+
 ```bash
 git clone https://github.com/GuillaumePv/data-analysis-crypto.git
 ```
-2) installer les librairies nécessaires pour le projet
+2) Install libraries
 
-Python 2
+* Python 2
 ```bash
 pip install -r requirements.txt
 ```
 
-Python 3
+* Python 3
 ```bash
 pip3 install -r requirements.txt
+```
+
+2) using our makefile to run our project
+
+* see helper of the makefile
+```bash
+make
+```
+* run the whole project
+```bash
+make run
+```
+
+* run only model script
+```bash
+make models
 ```
 
 # Project structure

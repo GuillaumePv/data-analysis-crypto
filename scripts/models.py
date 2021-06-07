@@ -85,6 +85,7 @@ for crypto in cryptos:
     features = data.df.iloc[:,3:-2].columns # select features for our model
     features = features.drop('date')
     features = features.drop('Adj Close')
+    print(len(features))
 
     #print(features)
     #==============
