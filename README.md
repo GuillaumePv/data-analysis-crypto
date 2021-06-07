@@ -98,7 +98,7 @@ https://github.com/hbast/pyTree
 - [x] make descriptive statistics
 - [x] create makefile to run all project
 - [x] do classification of model performance
-- [x] corrext excel name
+- [x] correct excel name
 - [x] create a structure tree for the report
 
 
