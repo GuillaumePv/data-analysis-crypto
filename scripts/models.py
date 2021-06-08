@@ -85,7 +85,7 @@ for crypto in cryptos:
     features = data.df.iloc[:,3:-2].columns # select features for our model
     features = features.drop('date')
     features = features.drop('Adj Close')
-    print(len(features))
+    #print(len(features))
 
     #print(features)
     #==============
@@ -130,7 +130,7 @@ for crypto in cryptos:
     #===============#
     # Simple models #
     #===============#
-
+    data.df = data.df.dropna()
     print("\n","==== Simple model ====")
     # standardize and choose our data
     X = data.df[features]

@@ -41,6 +41,7 @@ class Data:
         #self.df = self.df.iloc[:,1:]
         self.df['abs_diff_close_open'] = np.abs(self.df['Close'] - self.df['Open'])
         self.df['Close_std'] = (self.df['Close']-self.df['Close'].mean())/self.df['Close'].std()
+        self.df['Close_ret_t'] = np.log(self.df[['Close']].values/self.df[['Close']].shift(1).values)
         self.df['Close_ret_t+1'] = np.log(self.df[['Close']].shift(-1).values/self.df[['Close']].values)
         self.df['pump'] = np.where(self.df['Close_ret_t+1'] <= pump_thresold,1,0)
 
