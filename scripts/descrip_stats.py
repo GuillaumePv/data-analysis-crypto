@@ -40,7 +40,7 @@ for crypto_name in ['BTC','ETH','EOS']:
     #choose for our estimation
     data.create_RNN_data(reg='Return',LAG=10)
 
-    data.df.corr()[['Close_ret_t+1','pump_5']].to_latex(str(path_latex)+f"/{crypto_name}_corr_return_pump.tex")
+    data.df.corr()[['Close_ret_t+1','pump']].to_latex(str(path_latex)+f"/{crypto_name}_corr_return_pump.tex")
 
     ## create table for stat descriptive
     describe_data = data.df.copy()
@@ -57,9 +57,9 @@ for crypto_name in ['BTC','ETH','EOS']:
     desc.to_latex(str(path_latex)+f"/{crypto_name}_stat_descrip.tex")
 
     for columns in tqdm(data.df.columns):
-        if columns != "pump_5" and columns != 'date' and columns != 'Date':
+        if columns != "pump" and columns != 'date' and columns != 'Date':
             fig = plt.figure(figsize=(10,5))
-            plt.scatter(data.df["pump_5"],data.df[columns])
+            plt.scatter(data.df["pump"],data.df[columns])
             plt.xlabel("return t+1 > 5% (1: yes / 0: no)")
             plt.ylabel(columns)
             plt.grid(True)
