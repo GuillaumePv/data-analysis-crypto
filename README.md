@@ -37,12 +37,22 @@ pip3 install -r requirements.txt
 ```bash
 make
 ```
-* run the whole project
+* run the whole project (fetch/process/run)
 ```bash
 make run
 ```
 
-* run only model script
+* fetch the data
+```bash
+make fetch
+```
+
+* process the data
+```bash
+make process
+```
+
+* run models on current data
 ```bash
 make models
 ```
