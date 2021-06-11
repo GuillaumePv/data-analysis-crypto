@@ -20,13 +20,19 @@ The market of cryptocurrencies presents great investment opportunities accompani
 git clone https://github.com/GuillaumePv/data-analysis-crypto.git
 ```
 
-2) Create your virtual environment
+2) Go into project folder
+
+```bash
+cd ata-analysis-crypto
+```
+
+3) Create your virtual environment
 
 ```bash
 python -m venv venv
 ```
 
-3) Enter in your virtual environment
+4) Enter in your virtual environment
 
 * Mac OS / linux
 ```bash
@@ -38,7 +44,7 @@ source venv/bin/activate venv venv
 .\venv\Scripts\activate
 ```
 
-4) Install libraries
+5) Install libraries
 
 * Python 2
 ```bash
@@ -56,7 +62,7 @@ cd ..
 pip3 install -r requirements.txt
 ```
 
-5) using our makefile to run our project
+6) using our makefile to run our project
 
 * see helper of the makefile
 ```bash
