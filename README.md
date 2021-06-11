@@ -23,7 +23,7 @@ git clone https://github.com/GuillaumePv/data-analysis-crypto.git
 2) Go into project folder
 
 ```bash
-cd ata-analysis-crypto
+cd data-analysis-crypto
 ```
 
 3) Create your virtual environment
