@@ -42,11 +42,17 @@ source venv/bin/activate venv venv
 
 * Python 2
 ```bash
+cd twint
+pip install . -r requirements.txt
+cd ..
 pip install -r requirements.txt
 ```
 
 * Python 3
 ```bash
+cd twint
+pip3 install . -r requirements.txt
+cd ..
 pip3 install -r requirements.txt
 ```
 
