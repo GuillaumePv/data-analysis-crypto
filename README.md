@@ -64,7 +64,7 @@ pip3 install -r requirements.txt
 
 6) using our makefile to run our project
 
-WARNING: If you want to reproduce our results in the report DONT run make run/fetch/process this will update the database just run make models.
+WARNING: If you want to reproduce our results in the report DONT run "make run" or "make fetch" this will update the database. Run "make models" only.
 
 * see helper of the makefile
 ```bash
