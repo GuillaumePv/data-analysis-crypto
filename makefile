@@ -40,11 +40,13 @@ stats:
 process:
 	${PYTHON} scripts/process.py
 
-models:
+models: .FORCE
 	${PYTHON} scripts/models.py
 
 visualization:
 	${PYTHON} scripts/visualization.py
+
+.FORCE:
 
 # In this context, the *.project pattern means "anything that has the .project extension"
 clean:
