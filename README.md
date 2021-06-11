@@ -71,7 +71,6 @@ WARNING: If you want to reproduce our results in the report DONT run "make run" 
 make
 ```
 * run the whole project: fetch/process/run 
-(WARNING: New dataset will be created, then you will obtain different result than our result)
 
 ```bash
 make run
