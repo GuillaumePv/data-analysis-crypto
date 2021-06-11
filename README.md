@@ -19,7 +19,26 @@ The market of cryptocurrencies presents great investment opportunities accompani
 ```bash
 git clone https://github.com/GuillaumePv/data-analysis-crypto.git
 ```
-2) Install libraries
+
+2) Create your virtual environment
+
+```bash
+python -m venv venv
+```
+
+3) Enter in your virtual environment
+
+* Mac OS / linux
+```bash
+source venv/bin/activate venv venv
+```
+
+* Windows
+```bash
+.\venv\Scripts\activate
+```
+
+4) Install libraries
 
 * Python 2
 ```bash
@@ -31,13 +50,14 @@ pip install -r requirements.txt
 pip3 install -r requirements.txt
 ```
 
-2) using our makefile to run our project
+5) using our makefile to run our project
 
 * see helper of the makefile
 ```bash
 make
 ```
-* run the whole project
+* run the whole project (WARNING: New dataset will be created, then you will obtain different result than our result)
+
 ```bash
 make run
 ```
