@@ -56,13 +56,24 @@ pip3 install -r requirements.txt
 ```bash
 make
 ```
-* run the whole project (WARNING: New dataset will be created, then you will obtain different result than our result)
+* run the whole project: fetch/process/run 
+(WARNING: New dataset will be created, then you will obtain different result than our result)
 
 ```bash
 make run
 ```
 
-* run only model script
+* fetch the data
+```bash
+make fetch
+```
+
+* process the data
+```bash
+make process
+```
+
+* run models on current data
 ```bash
 make models
 ```
